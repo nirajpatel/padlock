@@ -14,7 +14,7 @@ public class LicenseValidatorTest {
         File keyFile = TestUtils.loadResourceAsFile("/valid.key");
         File licFile = TestUtils.loadResourceAsFile("/valid.lic");
         String[] args = new String[] {
-            "-k", keyFile.getPath(), "-o", licFile.getPath()
+            "-k", keyFile.getPath(), "-o", licFile.getPath(),
         };
         
         LicenseValidator.main(args);

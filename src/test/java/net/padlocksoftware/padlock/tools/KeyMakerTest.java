@@ -12,7 +12,7 @@ public class KeyMakerTest {
         File tmpFile = File.createTempFile("key", ".key");
         
         String[] args = new String[] {
-            "-k", tmpFile.getPath()
+            "-k", tmpFile.getPath(), "-j"
         };
         
         KeyMaker.main(args);
