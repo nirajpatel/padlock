@@ -17,6 +17,7 @@ import org.kohsuke.args4j.Option;
 
 public class LicenseMakerOptions {
     private final CmdLineParser parser;
+    private String errorMessage;
     
     @Option(name="-k", metaVar="Key File", usage="Key File", required=true)
     private File keyFile;
@@ -62,22 +63,31 @@ public class LicenseMakerOptions {
         handler=StringSetOptionHandler.class)
     private Set<String> addresses;
     
-    public LicenseMakerOptions(String args[]) throws CmdLineException, IOException {
+    public LicenseMakerOptions(String args[]) throws IOException {
         parser = new CmdLineParser(this);
-        parser.parseArgument(args);
+        
+        try {
+            parser.parseArgument(args);
+        } catch (CmdLineException e) {
+            this.errorMessage = e.getMessage();
+            return;
+        }
         
         if (licenseFile == null && !standardOut) {
-            throw new CmdLineException(parser, "License File or Standard Out flag required");
+            this.errorMessage = "License File or Standard Out flag required";
+            return;
         }
         
         if (startInMs != null && startDate != null) {
-            throw new CmdLineException(parser, "Only one of StartDate or StateInMs allowed");
+            this.errorMessage = "Only one of StartDate or StateInMs allowed";
+            return;
         }
         
         if (expirationInMs != null && expirationDate != null) {
-            throw new CmdLineException(parser, "Only one of ExpirationDate or ExpirationInMs allowed");
+            this.errorMessage = "Only one of ExpirationDate or ExpirationInMs allowed";
+            return;
         }
-        
+            
         if (startInMs != null) {
             startDate = new Date(startInMs);
         }
@@ -96,7 +106,14 @@ public class LicenseMakerOptions {
             addresses = new HashSet<String>();
         }
     }
+
+    public boolean isValid() {
+        return errorMessage == null;
+    }
     
+    public String getErrorMessage() {
+        return errorMessage;
+    }
     public String getUsage() {
         StringWriter writer = new StringWriter();
         parser.printUsage(writer, null);

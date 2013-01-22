@@ -23,7 +23,9 @@
 package net.padlocksoftware.padlock.tools;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.security.KeyPair;
 import java.security.interfaces.DSAPrivateKey;
 import java.util.Map;
@@ -42,10 +44,8 @@ import org.kohsuke.args4j.CmdLineException;
 public class LicenseMaker {
     private final KeyPair keyPair;
     private final License license;
-    private final LicenseMakerOptions options;
 
     public LicenseMaker(final LicenseMakerOptions options) throws IOException {
-        this.options = options;
         this.keyPair = KeyManager.importKeyPair(options.getKeyFile());
         this.license = LicenseFactory.createLicense();
 
@@ -73,23 +73,29 @@ public class LicenseMaker {
         signer.sign(license);
     }
 
-    public void writeLicence() throws IOException {
-        //
-        // Export to file
-        //
-        if (options.isStandardOut()) {
-            ByteArrayOutputStream os = new ByteArrayOutputStream();
-            LicenseIO.exportLicense(license, os);
-            System.out.println(os.toString());
-            os.close();
-        } else {
-            LicenseIO.exportLicense(license, options.getLicenseFile());
-        }
+    public void writeLicence(OutputStream licenseStream) throws IOException {
+        LicenseIO.exportLicense(license, licenseStream);
+        
     }
 
     public static void main(String[] args) throws CmdLineException, IOException {
         LicenseMakerOptions options = new LicenseMakerOptions(args);
-        LicenseMaker maker = new LicenseMaker(options);
-        maker.writeLicence();
+        if (options.isValid()) {
+            LicenseMaker maker = new LicenseMaker(options);
+            
+            if (options.isStandardOut()) {
+                ByteArrayOutputStream licenseStream = new ByteArrayOutputStream();
+                maker.writeLicence(licenseStream);
+                System.out.println(licenseStream.toString());
+                licenseStream.close();
+            } else {
+                FileOutputStream licenseStream = new FileOutputStream(options.getLicenseFile());
+                maker.writeLicence(licenseStream);
+                licenseStream.close();
+            }
+        } else {
+            System.err.println(options.getErrorMessage());
+            System.err.println(options.getUsage());
+        }
     }
 }

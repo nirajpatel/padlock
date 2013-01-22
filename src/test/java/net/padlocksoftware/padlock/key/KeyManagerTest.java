@@ -5,31 +5,21 @@
 
 package net.padlocksoftware.padlock.key;
 
-import net.padlocksoftware.padlock.KeyManager;
 import java.io.File;
 import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import junit.framework.TestCase;
+
+import net.padlocksoftware.padlock.KeyManager;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * @author jason
  */
-public class KeyManagerTest extends TestCase {
-    public KeyManagerTest(String testName) {
-        super(testName);
-    }
-
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-
+public class KeyManagerTest extends Assert {
+    @Test
     public void testKeyManager() throws Exception {
         KeyPair pair = KeyManager.createKeyPair();
         File file = File.createTempFile("test", "key");

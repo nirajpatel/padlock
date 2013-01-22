@@ -6,27 +6,15 @@
 package net.padlocksoftware.padlock.license;
 
 import java.io.File;
-import junit.framework.TestCase;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * @author jason
  */
-public class LicenseIOTest extends TestCase {
-
-    public LicenseIOTest(String testName) {
-        super(testName);
-    }
-
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-
+public class LicenseIOTest extends Assert {
+    @Test
     public void testLicenseIO() throws Exception {
         License license = LicenseFactory.createLicense();
         license.addProperty("name", "Jason Nichols");

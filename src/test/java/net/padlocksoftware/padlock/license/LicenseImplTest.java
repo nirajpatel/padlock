@@ -5,40 +5,26 @@
 
 package net.padlocksoftware.padlock.license;
 
-import java.net.NetworkInterface;
 import java.util.Date;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-import junit.framework.TestCase;
+
 import net.padlocksoftware.padlock.MacAddresses;
-import org.apache.commons.codec.binary.Hex;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * @author Jason
  */
-public class LicenseImplTest extends TestCase {
-
-    public LicenseImplTest(String testName) {
-        super(testName);
-    }
-
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-
+public class LicenseImplTest extends Assert {
     /**
      * Test of getCreationDate method, of class LicenseImpl.
      */
+    @Test
     public void testGetCreationDate() {
         LicenseImpl instance = new LicenseImpl();
         Date result = instance.getCreationDate();
@@ -48,6 +34,7 @@ public class LicenseImplTest extends TestCase {
     /**
      * Test of getExpirationDate method, of class LicenseImpl.
      */
+    @Test
     public void testGetExpirationDate() {
         LicenseImpl instance = new LicenseImpl();
         Date expResult = null;
@@ -63,6 +50,7 @@ public class LicenseImplTest extends TestCase {
     /**
      * Test of getStartDate method, of class LicenseImpl.
      */
+    @Test
     public void testGetStartDate() {
         Date startDate = new Date();
         LicenseImpl instance = new LicenseImpl(startDate);
@@ -74,6 +62,7 @@ public class LicenseImplTest extends TestCase {
     /**
      * Test of getFloatingExpirationPeriod method, of class LicenseImpl.
      */
+    @Test
     public void testGetFloatingExpirationPeriod() {
         LicenseImpl instance = new LicenseImpl();
         Long expResult = null;
@@ -90,6 +79,7 @@ public class LicenseImplTest extends TestCase {
     /**
      * Test of getProperties method, of class LicenseImpl.
      */
+    @Test
     public void testGetProperties() {
         LicenseImpl instance = new LicenseImpl();
         Properties result = instance.getProperties();
@@ -117,6 +107,7 @@ public class LicenseImplTest extends TestCase {
     /**
      * Test of getProperty method, of class LicenseImpl.
      */
+    @Test
     public void testGetProperty_String() {
         LicenseImpl instance = new LicenseImpl();
         Map<String, String> propertyMap = new HashMap<String, String>();
@@ -138,6 +129,7 @@ public class LicenseImplTest extends TestCase {
     /**
      * Test of getProperty method, of class LicenseImpl.
      */
+    @Test
     public void testGetProperty_String_String() {
         LicenseImpl instance = new LicenseImpl();
         String expectedResult = "defaultResult";
@@ -148,6 +140,7 @@ public class LicenseImplTest extends TestCase {
     /**
      * Test of getLicenseSignatureString method, of class LicenseImpl.
      */
+    @Test
     public void testGetLicenseSignatureString() {
         LicenseImpl instance = new LicenseImpl();
         String result = instance.getLicenseSignatureString();
@@ -157,6 +150,7 @@ public class LicenseImplTest extends TestCase {
     /**
      * Test of getLicenseSignature method, of class LicenseImpl.
      */
+    @Test
     public void testGetLicenseSignature() {
         LicenseImpl instance = new LicenseImpl();
         byte[] result = instance.getLicenseSignature();
@@ -166,6 +160,7 @@ public class LicenseImplTest extends TestCase {
     /**
      * Test of isSigned method, of class LicenseImpl.
      */
+    @Test
     public void testIsSigned() {
         LicenseImpl instance = new LicenseImpl();
         boolean expResult = false;
@@ -176,6 +171,7 @@ public class LicenseImplTest extends TestCase {
     /**
      * Test of getLicenseVersion method, of class LicenseImpl.
      */
+    @Test
     public void testGetLicenseVersion() {
         LicenseImpl instance = new LicenseImpl();
         int expResult = 2;
@@ -186,6 +182,7 @@ public class LicenseImplTest extends TestCase {
     /**
      * Test of getHardwareAddresses method, of class LicenseImpl.
      */
+    @Test
     public void testGetHardwareAddresses() {
         LicenseImpl instance = new LicenseImpl();
         Set<String> testSet = new HashSet<String>();
@@ -208,6 +205,7 @@ public class LicenseImplTest extends TestCase {
     /**
      * Test of setStartDate method, of class LicenseImpl.
      */
+    @Test
     public void testSetStartDate() {
         Date d = new Date(System.currentTimeMillis() - 1000000L);
         LicenseImpl instance = new LicenseImpl();
@@ -218,6 +216,7 @@ public class LicenseImplTest extends TestCase {
     /**
      * Test of setExpirationDate method, of class LicenseImpl.
      */
+    @Test
     public void testSetExpirationDate() {
         Date d = new Date(System.currentTimeMillis() + 50000L);
         LicenseImpl instance = new LicenseImpl();
@@ -228,6 +227,7 @@ public class LicenseImplTest extends TestCase {
     /**
      * Test of setFloatingExpirationPeriod method, of class LicenseImpl.
      */
+    @Test
     public void testSetFloatingExpirationDate() {
         Long period = 1000000L;
         LicenseImpl instance = new LicenseImpl();
@@ -236,6 +236,7 @@ public class LicenseImplTest extends TestCase {
         assertEquals(instance.getFloatingExpirationPeriod(), period);
     }
 
+    @Test
     public void testAddHardwareAddress_String() throws Exception {
         LicenseImpl instance = new LicenseImpl();
 

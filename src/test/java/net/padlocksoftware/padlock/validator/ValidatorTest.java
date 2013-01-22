@@ -6,23 +6,27 @@
 package net.padlocksoftware.padlock.validator;
 
 import java.io.File;
-import java.net.NetworkInterface;
 import java.security.KeyPair;
 import java.security.interfaces.DSAPrivateKey;
 import java.util.Date;
-import java.util.Enumeration;
-import junit.framework.TestCase;
+
 import net.padlocksoftware.padlock.KeyManager;
+import net.padlocksoftware.padlock.TestUtils;
 import net.padlocksoftware.padlock.license.License;
 import net.padlocksoftware.padlock.license.LicenseFactory;
 import net.padlocksoftware.padlock.license.LicenseIO;
 import net.padlocksoftware.padlock.license.LicenseSigner;
+
 import org.apache.commons.codec.binary.Hex;
+
+import org.junit.Assert;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * @author Jason
  */
-public class ValidatorTest extends TestCase {
+public class ValidatorTest extends Assert {
 
     private static final String pubKey = "30819f300d06092a864886f70d010101050003818d003"
                                          + "081890281810089ccb3d72a67931355c52dd93c5d9c3e"
@@ -32,22 +36,9 @@ public class ValidatorTest extends TestCase {
                                          + "9f53510f565988501f74d84f9bc9185b7ef73267f2073"
                                          + "14612264b5e9f660eb4fb3d440a80d2dec539a85de110" + "203010001";
 
-    public ValidatorTest(String testName) {
-        super(testName);
-    }
-
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-
+    @Test
     public void testLegacyValidate() throws Exception {
-        File licenseFile = ResourceUtils.loadResourceAsFile("/LegacyTest.lic");
+        File licenseFile = TestUtils.loadResourceAsFile("/LegacyTest.lic");
         License license = LicenseIO.importLicense(licenseFile);
         Validator validator = new Validator(license, pubKey);
         validator.validate();
@@ -56,6 +47,7 @@ public class ValidatorTest extends TestCase {
     /**
      * Test of validate method, of class Validator.
      */
+    @Test
     public void testValidate() throws Exception {
         KeyPair pair = KeyManager.createKeyPair();
         License license = LicenseFactory.createLicense();
@@ -117,6 +109,7 @@ public class ValidatorTest extends TestCase {
     //
     // }
 
+    @Test
     public void testBlacklist() throws Exception {
         KeyPair pair = KeyManager.createKeyPair();
         License license = LicenseFactory.createLicense();
@@ -139,6 +132,7 @@ public class ValidatorTest extends TestCase {
         assertTrue(ex);
     }
 
+    @Test
     public void testPrior() throws Exception {
         KeyPair pair = KeyManager.createKeyPair();
         License license = LicenseFactory.createLicense();
@@ -164,7 +158,9 @@ public class ValidatorTest extends TestCase {
      * 
      * @throws Exception
      */
-    public void ignore_testExpired() throws Exception {
+    @Test
+    @Ignore
+    public void testExpired() throws Exception {
         KeyPair pair = KeyManager.createKeyPair();
         License license = LicenseFactory.createLicense();
         license.setStartDate(new Date(100));
@@ -182,6 +178,7 @@ public class ValidatorTest extends TestCase {
         assertTrue(ex);
     }
 
+    @Test
     public void testExpiredFloat() throws Exception {
         KeyPair pair = KeyManager.createKeyPair();
         License license = LicenseFactory.createLicense();

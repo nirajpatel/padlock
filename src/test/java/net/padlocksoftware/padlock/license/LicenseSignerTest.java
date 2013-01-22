@@ -8,31 +8,20 @@ package net.padlocksoftware.padlock.license;
 import java.io.File;
 import java.security.KeyPair;
 import java.security.interfaces.DSAPrivateKey;
-import junit.framework.TestCase;
+
 import net.padlocksoftware.padlock.KeyManager;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * @author Jason
  */
-public class LicenseSignerTest extends TestCase {
-
-    public LicenseSignerTest(String testName) {
-        super(testName);
-    }
-
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-
+public class LicenseSignerTest extends Assert {
     /**
      * Test of sign method, of class LicenseSigner.
      */
+    @Test
     public void testSign() throws Exception {
         License license = LicenseFactory.createLicense();
         license.addProperty("Name", "Jason Nichols");
