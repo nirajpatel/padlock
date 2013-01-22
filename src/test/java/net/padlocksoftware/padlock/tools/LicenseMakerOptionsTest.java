@@ -40,6 +40,8 @@ public class LicenseMakerOptionsTest extends Assert {
         };
         LicenseMakerOptions options = new LicenseMakerOptions(args);
         assertTrue(options.isStandardOut());
+        assertNotNull(options.getProperties());
+        assertNotNull(options.getAddresses());
     }
 
     @Test(expected = CmdLineException.class)
@@ -74,15 +76,16 @@ public class LicenseMakerOptionsTest extends Assert {
     @Test
     public void testSimpleArgs() throws Exception {
         String[] args = new String[] {
-            "-k", "somefile.key", "-o", "newfile.lic", "-s", "12312313", "-e", "2131242234324", "-x",
+            "-k", "somefile.key", "-o", "newfile.lic", "-s", toDateLong("2012/12/22").toString(), "-e", toDateLong("2013/11/23").toString(), "-x",
             "12312", "-p", "first=jason", "second=mathew", "last=pell", "-h", "192.168.0.5", "192.168.0.6",
         };
 
         LicenseMakerOptions options = new LicenseMakerOptions(args);
         assertEquals("somefile.key", options.getKeyFile().getPath());
-        assertEquals("newfile.lic", options.getOutputFile().getPath());
-        assertEquals("12312313", options.getStartInMs().toString());
-        assertEquals("2131242234324", options.getExpirationInMs().toString());
+        assertEquals("newfile.lic", options.getLicenseFile().getPath());
+        assertEquals("2012/12/22", toString(options.getStartDate()));
+        assertEquals("2013/11/23", toString(options.getExpirationDate()));
+        
         assertEquals("12312", options.getExpirationFloatInMs().toString());
 
         Map<String, String> properties = options.getProperties();
@@ -95,8 +98,13 @@ public class LicenseMakerOptionsTest extends Assert {
         assertTrue(macs.contains("192.168.0.6"));
     }
 
-    protected String toString(Date date) throws Exception {
+    private String toString(Date date) throws Exception {
         SimpleDateFormat dateFormat = new SimpleDateFormat(DateOptionHandler.DATE_FORMAT);
         return dateFormat.format(date);
+    }
+    
+    private Long toDateLong(String date) throws Exception {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DateOptionHandler.DATE_FORMAT);
+        return dateFormat.parse(date).getTime();
     }
 }
