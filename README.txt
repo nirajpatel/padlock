@@ -3,8 +3,7 @@ Padlock 2.2.X (PELLCORP FORK)
 
 This is a fork of Padlock and my objective is to focus on command line tools only.  Thus the UI will no longer be supported in this fork.
 
-There is a dist tar ball created that has 3 scripts and the related jars, just untar it somewhere and you can execute 
-the scripts directly.
+There is a dist tar ball created that has 3 scripts and the related jars, just untar it somewhere and you can execute the scripts directly.
 
 1) Key Maker 
 
