@@ -1,9 +1,11 @@
 package net.padlocksoftware.padlock.tools;
 
-import java.text.ParseException;
+import java.io.File;
+import java.io.FileWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 import org.kohsuke.args4j.CmdLineException;
@@ -75,9 +77,15 @@ public class LicenseMakerOptionsTest extends Assert {
 
     @Test
     public void testSimpleArgs() throws Exception {
+        Properties fileProps = new Properties();
+        fileProps.setProperty("hello", "world");
+        fileProps.setProperty("first", "First: ${first}");
+        File tmpProps = savePropertiesFile(fileProps);
+        
         String[] args = new String[] {
             "-k", "somefile.key", "-o", "newfile.lic", "-s", toDateLong("2012/12/22").toString(), "-e", toDateLong("2013/11/23").toString(), "-x",
             "12312", "-p", "first=jason", "second=mathew", "last=pell", "-h", "192.168.0.5", "192.168.0.6",
+            "-P", tmpProps.getAbsoluteFile().toString()
         };
 
         LicenseMakerOptions options = new LicenseMakerOptions(args);
@@ -89,15 +97,26 @@ public class LicenseMakerOptionsTest extends Assert {
         assertEquals("12312", options.getExpirationFloatInMs().toString());
 
         Map<String, String> properties = options.getProperties();
-        assertEquals("jason", properties.get("first"));
+        assertEquals("First: jason", properties.get("first"));
         assertEquals("mathew", properties.get("second"));
         assertEquals("pell", properties.get("last"));
-
+        assertEquals("world", properties.get("hello"));
+        
         Set<String> macs = options.getAddresses();
         assertTrue(macs.contains("192.168.0.5"));
         assertTrue(macs.contains("192.168.0.6"));
+        
+        tmpProps.delete();
     }
 
+    private File savePropertiesFile(Properties p) throws Exception {
+        File tmpFile = File.createTempFile("props", ".properties");
+        FileWriter writer = new FileWriter(tmpFile);
+        p.store(writer, null);
+        writer.close();
+        return tmpFile;
+    }
+    
     private String toString(Date date) throws Exception {
         SimpleDateFormat dateFormat = new SimpleDateFormat(DateOptionHandler.DATE_FORMAT);
         return dateFormat.format(date);

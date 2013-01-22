@@ -1,11 +1,14 @@
 package net.padlocksoftware.padlock.tools;
 
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 import org.kohsuke.args4j.CmdLineException;
@@ -52,11 +55,14 @@ public class LicenseMakerOptions {
         usage="License properties, Expressed as options of the form: key1=value1, key2=value2")
     private Map<String, String> properties;
     
+    @Option(name="-P", metaVar="Properties File", usage="License properties file")
+    private File propertiesFile;
+    
     @Option(name="-h", metaVar="Addresses", usage="Hardware locked addresses, in the form of mac1, mac2, mac3", 
         handler=StringSetOptionHandler.class)
     private Set<String> addresses;
     
-    public LicenseMakerOptions(String args[]) throws CmdLineException {
+    public LicenseMakerOptions(String args[]) throws CmdLineException, IOException {
         parser = new CmdLineParser(this);
         parser.parseArgument(args);
         
@@ -83,6 +89,8 @@ public class LicenseMakerOptions {
         if (properties == null) {
             properties = new HashMap<String, String>();
         }
+
+        loadPropertiesFile();
         
         if (addresses == null) {
             addresses = new HashSet<String>();
@@ -95,6 +103,28 @@ public class LicenseMakerOptions {
         return writer.toString();
     }
 
+    private void loadPropertiesFile() throws IOException {
+        if (propertiesFile != null) {
+            Properties props = new Properties();
+            FileReader propsFile = new FileReader(propertiesFile);
+            props.load(propsFile);
+            for (Map.Entry<Object, Object> fileProp : props.entrySet()) {
+                String key = (String) fileProp.getKey();
+                String value = (String) fileProp.getValue();
+                value = expandVariable(value);
+                properties.put(key, value);
+            }
+            propsFile.close();
+        }
+    }
+    
+    private String expandVariable(String value) {
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            value = value.replace("${" + entry.getKey() + "}", entry.getValue());
+        }
+        return value;
+    }
+    
     public File getKeyFile() {
         return keyFile;
     }
