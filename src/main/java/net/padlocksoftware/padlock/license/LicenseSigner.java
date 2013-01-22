@@ -130,15 +130,6 @@ public final class LicenseSigner {
         throw new IllegalStateException("License is already signed");
       }
 
-      // If we're in demo mode, hard code a license expiration date
-      PadlockState state = new PadlockState(padlockLicense);
-
-      if (!state.isValid()) {
-        Date startDate = license.getStartDate();
-        logger.fine("Demo mode - overriding the License expiration date");
-        license.setExpirationDate(new Date(startDate.getTime() + TWO_WEEKS_IN_MS));
-      }
-      
       String licenseString = ((LicenseImpl) license).concatenate();
       try {
         Signature signature = Signature.getInstance("SHA1withDSA");

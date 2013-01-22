@@ -18,11 +18,10 @@ import net.padlocksoftware.padlock.MacAddresses;
 import org.apache.commons.codec.binary.Hex;
 
 /**
- *
  * @author Jason
  */
 public class LicenseImplTest extends TestCase {
-    
+
     public LicenseImplTest(String testName) {
         super(testName);
     }
@@ -41,7 +40,6 @@ public class LicenseImplTest extends TestCase {
      * Test of getCreationDate method, of class LicenseImpl.
      */
     public void testGetCreationDate() {
-        System.out.println("getCreationDate");
         LicenseImpl instance = new LicenseImpl();
         Date result = instance.getCreationDate();
         assertNotNull(result);
@@ -51,7 +49,6 @@ public class LicenseImplTest extends TestCase {
      * Test of getExpirationDate method, of class LicenseImpl.
      */
     public void testGetExpirationDate() {
-        System.out.println("getExpirationDate");
         LicenseImpl instance = new LicenseImpl();
         Date expResult = null;
         Date result = instance.getExpirationDate();
@@ -67,10 +64,9 @@ public class LicenseImplTest extends TestCase {
      * Test of getStartDate method, of class LicenseImpl.
      */
     public void testGetStartDate() {
-        System.out.println("getStartDate");
         Date startDate = new Date();
         LicenseImpl instance = new LicenseImpl(startDate);
-        
+
         Date result = instance.getStartDate();
         assertEquals(startDate, result);
     }
@@ -79,7 +75,6 @@ public class LicenseImplTest extends TestCase {
      * Test of getFloatingExpirationPeriod method, of class LicenseImpl.
      */
     public void testGetFloatingExpirationPeriod() {
-        System.out.println("getFloatingExpirationPeriod");
         LicenseImpl instance = new LicenseImpl();
         Long expResult = null;
         Long result = instance.getFloatingExpirationPeriod();
@@ -88,7 +83,7 @@ public class LicenseImplTest extends TestCase {
         expResult = 10000L;
         instance.setFloatingExpirationPeriod(expResult);
         result = instance.getFloatingExpirationPeriod();
-        
+
         assertEquals(expResult, result);
     }
 
@@ -96,17 +91,16 @@ public class LicenseImplTest extends TestCase {
      * Test of getProperties method, of class LicenseImpl.
      */
     public void testGetProperties() {
-        System.out.println("getProperties");
         LicenseImpl instance = new LicenseImpl();
         Properties result = instance.getProperties();
         assertEquals(0, result.size());
 
-        Map<String,String> propertyMap = new HashMap<String,String>();
+        Map<String, String> propertyMap = new HashMap<String, String>();
         propertyMap.put("property1", "value1");
         propertyMap.put("property2", "value2");
         propertyMap.put("property3", "value3");
 
-        for(String key : propertyMap.keySet()) {
+        for (String key : propertyMap.keySet()) {
             instance.addProperty(key, propertyMap.get(key));
         }
 
@@ -124,29 +118,27 @@ public class LicenseImplTest extends TestCase {
      * Test of getProperty method, of class LicenseImpl.
      */
     public void testGetProperty_String() {
-        System.out.println("getProperty");
-
         LicenseImpl instance = new LicenseImpl();
-        Map<String,String> propertyMap = new HashMap<String,String>();
+        Map<String, String> propertyMap = new HashMap<String, String>();
         propertyMap.put("property1", "value1");
         propertyMap.put("property2", "value2");
         propertyMap.put("property3", "value3");
 
-        for(String key : propertyMap.keySet()) {
+        for (String key : propertyMap.keySet()) {
             instance.addProperty(key, propertyMap.get(key));
         }
 
-        for(String key : propertyMap.keySet()) {
+        for (String key : propertyMap.keySet()) {
             String expectedValue = propertyMap.get(key);
             String resultValue = instance.getProperty(key);
             assertEquals(expectedValue, resultValue);
-        }    }
+        }
+    }
 
     /**
      * Test of getProperty method, of class LicenseImpl.
      */
     public void testGetProperty_String_String() {
-        System.out.println("getProperty");
         LicenseImpl instance = new LicenseImpl();
         String expectedResult = "defaultResult";
         String result = instance.getProperty("asfdb", expectedResult);
@@ -157,7 +149,6 @@ public class LicenseImplTest extends TestCase {
      * Test of getLicenseSignatureString method, of class LicenseImpl.
      */
     public void testGetLicenseSignatureString() {
-        System.out.println("getLicenseSignatureString");
         LicenseImpl instance = new LicenseImpl();
         String result = instance.getLicenseSignatureString();
         assertNull(result);
@@ -167,7 +158,6 @@ public class LicenseImplTest extends TestCase {
      * Test of getLicenseSignature method, of class LicenseImpl.
      */
     public void testGetLicenseSignature() {
-        System.out.println("getLicenseSignature");
         LicenseImpl instance = new LicenseImpl();
         byte[] result = instance.getLicenseSignature();
         assertNull(result);
@@ -177,7 +167,6 @@ public class LicenseImplTest extends TestCase {
      * Test of isSigned method, of class LicenseImpl.
      */
     public void testIsSigned() {
-        System.out.println("isSigned");
         LicenseImpl instance = new LicenseImpl();
         boolean expResult = false;
         boolean result = instance.isSigned();
@@ -188,7 +177,6 @@ public class LicenseImplTest extends TestCase {
      * Test of getLicenseVersion method, of class LicenseImpl.
      */
     public void testGetLicenseVersion() {
-        System.out.println("getLicenseVersion");
         LicenseImpl instance = new LicenseImpl();
         int expResult = 2;
         int result = instance.getLicenseVersion();
@@ -199,14 +187,13 @@ public class LicenseImplTest extends TestCase {
      * Test of getHardwareAddresses method, of class LicenseImpl.
      */
     public void testGetHardwareAddresses() {
-        System.out.println("getHardwareAddresses");
         LicenseImpl instance = new LicenseImpl();
         Set<String> testSet = new HashSet<String>();
         testSet.add("001234567891");
         testSet.add("009876543210");
         testSet.add("345678901234");
 
-        for(String str : testSet) {
+        for (String str : testSet) {
             instance.addHardwareAddress(str);
         }
 
@@ -214,7 +201,7 @@ public class LicenseImplTest extends TestCase {
 
         assertEquals(testSet.size(), result.size());
         for (String testString : result) {
-          assertTrue(result.contains(testString));
+            assertTrue(result.contains(testString));
         }
     }
 
@@ -222,7 +209,6 @@ public class LicenseImplTest extends TestCase {
      * Test of setStartDate method, of class LicenseImpl.
      */
     public void testSetStartDate() {
-        System.out.println("setStartDate");
         Date d = new Date(System.currentTimeMillis() - 1000000L);
         LicenseImpl instance = new LicenseImpl();
         instance.setStartDate(d);
@@ -233,7 +219,6 @@ public class LicenseImplTest extends TestCase {
      * Test of setExpirationDate method, of class LicenseImpl.
      */
     public void testSetExpirationDate() {
-        System.out.println("setExpirationDate");
         Date d = new Date(System.currentTimeMillis() + 50000L);
         LicenseImpl instance = new LicenseImpl();
         instance.setExpirationDate(d);
@@ -244,7 +229,6 @@ public class LicenseImplTest extends TestCase {
      * Test of setFloatingExpirationPeriod method, of class LicenseImpl.
      */
     public void testSetFloatingExpirationDate() {
-        System.out.println("setFloatingExpirationDate");
         Long period = 1000000L;
         LicenseImpl instance = new LicenseImpl();
         instance.setFloatingExpirationPeriod(period);
@@ -253,12 +237,11 @@ public class LicenseImplTest extends TestCase {
     }
 
     public void testAddHardwareAddress_String() throws Exception {
-        System.out.println("addHardwareAddress - String");
         LicenseImpl instance = new LicenseImpl();
 
         Set<String> addresses = MacAddresses.getSystemMacAddresses();
         for (String address : addresses) {
-          instance.addHardwareAddress(address);
+            instance.addHardwareAddress(address);
         }
 
         Set<String> interfaceStrings = instance.getHardwareAddresses();
@@ -272,59 +255,57 @@ public class LicenseImplTest extends TestCase {
     /**
      * Test of addHardwareAddress method, of class LicenseImpl.
      */
-//    public void testAddHardwareAddress_byteArr() throws Exception {
-//        System.out.println("addHardwareAddress - byte[]");
-//        LicenseImpl instance = new LicenseImpl();
-//
-//        Set<NetworkInterface> interfaceSet = new HashSet<NetworkInterface>();
-//
-//        Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
-//        while (interfaces.hasMoreElements()) {
-//            NetworkInterface interfce = interfaces.nextElement();
-//            if (!interfce.isLoopback() && !interfce.isVirtual()
-//                    && !interfce.isPointToPoint() && interfce.getHardwareAddress() != null) {
-//                interfaceSet.add(interfce);
-//                instance.addHardwareAddress(interfce.getHardwareAddress());
-//            }
-//        }
-//        Set<String> interfaceStrings = instance.getHardwareAddresses();
-//        assertEquals(interfaceSet.size(), interfaceStrings.size());
-//
-//        for (NetworkInterface interfce : interfaceSet) {
-//            String interfaceString = new String(Hex.encodeHex(interfce.getHardwareAddress()));
-//            assertTrue(interfaceStrings.contains(interfaceString));
-//        }
-//    }
+    // public void testAddHardwareAddress_byteArr() throws Exception {
+    // LicenseImpl instance = new LicenseImpl();
+    //
+    // Set<NetworkInterface> interfaceSet = new HashSet<NetworkInterface>();
+    //
+    // Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+    // while (interfaces.hasMoreElements()) {
+    // NetworkInterface interfce = interfaces.nextElement();
+    // if (!interfce.isLoopback() && !interfce.isVirtual()
+    // && !interfce.isPointToPoint() && interfce.getHardwareAddress() != null) {
+    // interfaceSet.add(interfce);
+    // instance.addHardwareAddress(interfce.getHardwareAddress());
+    // }
+    // }
+    // Set<String> interfaceStrings = instance.getHardwareAddresses();
+    // assertEquals(interfaceSet.size(), interfaceStrings.size());
+    //
+    // for (NetworkInterface interfce : interfaceSet) {
+    // String interfaceString = new String(Hex.encodeHex(interfce.getHardwareAddress()));
+    // assertTrue(interfaceStrings.contains(interfaceString));
+    // }
+    // }
 
-//    /**
-//     * Test of removeHardwareAddress method, of class LicenseImpl.
-//     */
-//    public void testRemoveHardwareAddress_byteArr() throws Exception {
-//        System.out.println("removeHardwareAddress - byte[]");
-//        LicenseImpl instance = new LicenseImpl();
-//
-//        Set<NetworkInterface> interfaceSet = new HashSet<NetworkInterface>();
-//        byte[] removedAddress = null;
-//        Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
-//        while (interfaces.hasMoreElements()) {
-//            NetworkInterface interfce = interfaces.nextElement();
-//            if (!interfce.isLoopback() && !interfce.isVirtual()
-//                    && !interfce.isPointToPoint() && interfce.getHardwareAddress() != null) {
-//                interfaceSet.add(interfce);
-//                instance.addHardwareAddress(interfce.getHardwareAddress());
-//                //System.out.println("Adding interface:" + interfce);
-//                byte[] mac = interfce.getHardwareAddress();
-//                if (removedAddress == null) {
-//                    removedAddress = mac;
-//                }
-//            }
-//        }
-//
-//        instance.removeHardwareAddress(removedAddress);
-//
-//        assertTrue(interfaceSet.size() - 1 == instance.getHardwareAddresses().size());
-//        String removedString = new String(Hex.encodeHex(removedAddress));
-//        assertFalse(instance.getHardwareAddresses().contains(removedString));
-//    }
+    // /**
+    // * Test of removeHardwareAddress method, of class LicenseImpl.
+    // */
+    // public void testRemoveHardwareAddress_byteArr() throws Exception {
+    // LicenseImpl instance = new LicenseImpl();
+    //
+    // Set<NetworkInterface> interfaceSet = new HashSet<NetworkInterface>();
+    // byte[] removedAddress = null;
+    // Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+    // while (interfaces.hasMoreElements()) {
+    // NetworkInterface interfce = interfaces.nextElement();
+    // if (!interfce.isLoopback() && !interfce.isVirtual()
+    // && !interfce.isPointToPoint() && interfce.getHardwareAddress() != null) {
+    // interfaceSet.add(interfce);
+    // instance.addHardwareAddress(interfce.getHardwareAddress());
+    // //System.out.println("Adding interface:" + interfce);
+    // byte[] mac = interfce.getHardwareAddress();
+    // if (removedAddress == null) {
+    // removedAddress = mac;
+    // }
+    // }
+    // }
+    //
+    // instance.removeHardwareAddress(removedAddress);
+    //
+    // assertTrue(interfaceSet.size() - 1 == instance.getHardwareAddresses().size());
+    // String removedString = new String(Hex.encodeHex(removedAddress));
+    // assertFalse(instance.getHardwareAddresses().contains(removedString));
+    // }
 
 }

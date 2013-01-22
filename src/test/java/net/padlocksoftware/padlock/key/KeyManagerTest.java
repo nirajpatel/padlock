@@ -13,11 +13,9 @@ import java.security.PublicKey;
 import junit.framework.TestCase;
 
 /**
- *
  * @author jason
  */
 public class KeyManagerTest extends TestCase {
-    
     public KeyManagerTest(String testName) {
         super(testName);
     }
@@ -32,24 +30,20 @@ public class KeyManagerTest extends TestCase {
         super.tearDown();
     }
 
-  public void testKeyManager() throws Exception {
-    System.out.println("testKeyManager");
-    
-    KeyPair pair = KeyManager.createKeyPair();
-    File file = new File("test.key");
+    public void testKeyManager() throws Exception {
+        KeyPair pair = KeyManager.createKeyPair();
+        File file = File.createTempFile("test", "key");
 
-    KeyManager.exportKeyPair(pair, file);
-    KeyPair pair2 = KeyManager.importKeyPair(file);
+        KeyManager.exportKeyPair(pair, file);
+        KeyPair pair2 = KeyManager.importKeyPair(file);
 
-    PublicKey public1 = pair.getPublic();
-    PublicKey public2 = pair2.getPublic();
-    assertEquals(public1, public2);
+        PublicKey public1 = pair.getPublic();
+        PublicKey public2 = pair2.getPublic();
+        assertEquals(public1, public2);
 
-    PrivateKey private1 = pair.getPrivate();
-    PrivateKey private2 = pair2.getPrivate();
-    assertEquals(private1, private2);
-    file.delete();
-  }
-
-
+        PrivateKey private1 = pair.getPrivate();
+        PrivateKey private2 = pair2.getPrivate();
+        assertEquals(private1, private2);
+        file.delete();
+    }
 }

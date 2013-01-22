@@ -12,11 +12,10 @@ import junit.framework.TestCase;
 import net.padlocksoftware.padlock.KeyManager;
 
 /**
- *
  * @author Jason
  */
 public class LicenseSignerTest extends TestCase {
-    
+
     public LicenseSignerTest(String testName) {
         super(testName);
     }
@@ -31,22 +30,23 @@ public class LicenseSignerTest extends TestCase {
         super.tearDown();
     }
 
-  /**
-   * Test of sign method, of class LicenseSigner.
-   */
-  public void testSign() throws Exception {
-    System.out.println("sign");
-    License license = LicenseFactory.createLicense();
-    license.addProperty("Name", "Jason Nichols");
-    license.addProperty("Email", "jason@padlocksoftware.net");
+    /**
+     * Test of sign method, of class LicenseSigner.
+     */
+    public void testSign() throws Exception {
+        License license = LicenseFactory.createLicense();
+        license.addProperty("Name", "Jason Nichols");
+        license.addProperty("Email", "jason@padlocksoftware.net");
 
-    KeyPair pair = KeyManager.createKeyPair();
+        KeyPair pair = KeyManager.createKeyPair();
 
-    LicenseSigner signer = LicenseSigner.createLicenseSigner((DSAPrivateKey)pair.getPrivate());
-    signer.sign(license);
-    LicenseIO.exportLicense(license, new File("testSigned.lic"));
-    assertTrue(license.isSigned());
-
-  }
+        LicenseSigner signer = LicenseSigner.createLicenseSigner((DSAPrivateKey)pair.getPrivate());
+        signer.sign(license);
+        
+        File testSigned = File.createTempFile("testSigned", "lic");
+        LicenseIO.exportLicense(license, testSigned);
+        assertTrue(license.isSigned());
+        testSigned.delete();
+    }
 
 }

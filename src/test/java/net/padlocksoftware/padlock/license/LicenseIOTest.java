@@ -9,11 +9,10 @@ import java.io.File;
 import junit.framework.TestCase;
 
 /**
- *
  * @author jason
  */
 public class LicenseIOTest extends TestCase {
-    
+
     public LicenseIOTest(String testName) {
         super(testName);
     }
@@ -29,21 +28,19 @@ public class LicenseIOTest extends TestCase {
     }
 
     public void testLicenseIO() throws Exception {
-      System.out.println("testLicenseIO");
+        License license = LicenseFactory.createLicense();
+        license.addProperty("name", "Jason Nichols");
+        license.addProperty("email", "jason@padlocksoftware.net");
+        license.setFloatingExpirationPeriod(200000L);
 
-      License license = LicenseFactory.createLicense();
-      license.addProperty("name", "Jason Nichols");
-      license.addProperty("email", "jason@padlocksoftware.net");
-      license.setFloatingExpirationPeriod(200000L);
+        File file = File.createTempFile("test", "lic");
+        
+        LicenseIO.exportLicense(license, file);
 
-      File file = new File("test.lic");
+        License license2 = LicenseIO.importLicense(file);
 
-      LicenseIO.exportLicense(license, file);
+        assertTrue(license.equals(license2));
 
-      License license2 = LicenseIO.importLicense(file);
-
-      assertTrue(license.equals(license2));
-
-      file.delete();
+        file.delete();
     }
 }
