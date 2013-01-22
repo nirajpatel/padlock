@@ -42,67 +42,15 @@ import org.apache.commons.codec.binary.Hex;
  * @author Jason Nichols (jason@padlocksoftware.net)
  */
 public class LicenseValidator {
+    private final License license;
+    private final KeyPair pair;
 
-    static License license = null;
-    static KeyPair pair = null;
-
-    private static void showUsageAndExit() {
-        System.err.println("Usage: LicenseVerifier -l <License File> -k <KeyPair>");
-        System.exit(1);
+    public LicenseValidator(LicenseValidatorOptions options) throws IOException {
+        license = LicenseIO.importLicense(options.getLicenseFile());
+        pair = KeyManager.importKeyPair(options.getKeyFile()); 
     }
-
-    private static void parseLicenseFile(String fileName) {
-        try {
-            license = LicenseIO.importLicense(new File(fileName));
-        } catch (IOException ex) {
-            System.err.println("Error reading license: " + ex.getMessage());
-            System.exit(1);
-        } catch (ImportException ex) {
-            System.err.println("Error parsing license data: " + ex.getMessage());
-            System.exit(1);
-        }
-    }
-
-    private static void parseKeyPairFile(String fileName) {
-        try {
-            pair = KeyManager.importKeyPair(new File(fileName));
-        } catch (IOException ex) {
-            System.err.println("Error reading key file: " + ex.getMessage());
-            System.exit(1);
-        }
-    }
-
-    private static void parse(String[] args) {
-
-        if (args.length < 4) {
-            showUsageAndExit();
-        }
-
-        //
-        // We stop at length - 1 because every argument has both a switch
-        // and a parameter.
-        //
-        for (int x = 0; x < args.length - 1; x++) {
-            String arg = args[x];
-
-            if (arg.equals("-l")) {
-                x++;
-                parseLicenseFile(args[x]);
-            } else if (arg.equals("-k")) {
-                x++;
-                parseKeyPairFile(args[x]);
-            } else {
-                showUsageAndExit();
-            }
-
-        }
-    }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        parse(args);
+    
+    public String validate() {
         Date currentDate = new Date();
 
         Validator v = new Validator(license, new String(Hex.encodeHex(pair.getPublic().getEncoded())));
@@ -115,61 +63,81 @@ public class LicenseValidator {
             state = e.getLicenseState();
         }
 
+        StringBuilder builder = new StringBuilder();
+        
         // Show test status
-        System.out.println("\nValidation Test Results:");
-        System.out.println("========================\n");
+        builder.append("\nValidation Test Results:");
+        builder.append("========================\n");
         for (TestResult result : state.getTests()) {
-            System.out.println("\t" + result.getTest().getName() + "\t\t\t"
+            builder.append("\t" + result.getTest().getName() + "\t\t\t"
                                + (result.passed() ? "Passed" : "Failed"));
         }
 
-        System.out.println("\nLicense state: " + (state.isValid() ? "Valid" : "Invalid"));
+        builder.append("\nLicense state: " + (state.isValid() ? "Valid" : "Invalid"));
 
         //
         // Cycle through any dates
         //
         Date d = license.getCreationDate();
-        System.out.println("\nCreation date: \t\t" + d);
+        builder.append("\nCreation date: \t\t" + d);
 
         d = license.getStartDate();
-        System.out.println("Start date: \t\t" + d);
+        builder.append("Start date: \t\t" + d);
 
         d = license.getExpirationDate();
-        System.out.println("Expiration date: \t" + d);
+        builder.append("Expiration date: \t" + d);
 
         Long floatPeroid = license.getFloatingExpirationPeriod();
         if (floatPeroid != null) {
             long seconds = floatPeroid / 1000L;
-            System.out.println("\nExpire after first run: " + seconds + " seconds");
+            builder.append("\nExpire after first run: " + seconds + " seconds");
 
         }
 
         if (floatPeroid != null || license.getExpirationDate() != null) {
             long remaining = v.getTimeRemaining(currentDate) / 1000L;
-            System.out.println("\nTime remaining: " + remaining + " seconds");
-
+            builder.append("\nTime remaining: " + remaining + " seconds");
         }
 
         //
         // License properties
         //
-        System.out.println("\nLicense Properties");
+        builder.append("\nLicense Properties");
         Properties p = license.getProperties();
         if (p.size() == 0) {
-            System.out.println("None");
+            builder.append("None");
         }
 
         for (final Enumeration propNames = p.propertyNames(); propNames.hasMoreElements();) {
             final String key = (String)propNames.nextElement();
-            System.out.println("Property: " + key + " = " + p.getProperty(key));
+            builder.append("Property: " + key + " = " + p.getProperty(key));
         }
 
         //
         // Hardware locking
         //
         for (String address : license.getHardwareAddresses()) {
-            System.out.println("\nHardware lock: " + address);
+            builder.append("\nHardware lock: " + address);
         }
-        System.out.println("\n");
+        builder.append("\n");
+        
+        return builder.toString();
+    }
+
+    /**
+     * @param args the command line arguments
+     * @throws IOException 
+     */
+    public static void main(String[] args) throws IOException {
+        LicenseValidatorOptions options = new LicenseValidatorOptions(args);
+        if (options.isValid()) {
+            LicenseValidator validator = new LicenseValidator(options);
+            System.out.println(validator.validate());
+            System.exit(0);
+        } else {
+            System.err.println(options.getErrorMessage());
+            System.err.println(options.getUsage());
+            System.exit(-1);
+        }
     }
 }

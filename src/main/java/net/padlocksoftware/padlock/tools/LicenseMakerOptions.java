@@ -25,10 +25,11 @@ public class LicenseMakerOptions {
     @Option(name="-o", metaVar="License File", usage="Output License File")
     private File licenseFile;
     
-    @Option(name="-O", usage="end output to standard out instead of a file")
+    @Option(name="-O", usage="License File Output to standard out instead of a file")
     private boolean standardOut;
     
-    @Option(name="-s", metaVar="Start", usage="The start of the license validity period, " 
+    @Option(name="-s", metaVar="Start", 
+        usage="The start of the license validity period, " 
     		+ "different than the current date.  In ms since"
                 + "the epoch (1/1/1970)")
     private Long startInMs;
@@ -39,12 +40,12 @@ public class LicenseMakerOptions {
     private Date startDate;
     
     @Option(name="-e", metaVar="Expiration",
-        usage="License expiration date. If this option is omitted the license is perpetual " +
+        usage="License expiration date. If this option is omitted the license is perpetual. " +
                         "In ms since the epoch (1/1/1970)")
     private Long expirationInMs;
     
     @Option(name="-E", metaVar="Expiration", handler=DateOptionHandler.class,
-        usage="The start of the license validity period, if different then the current date.  " +
+        usage="License expriation date. If this option is omitted the license is perpetual." +
                         "The date format is yyyy/MM/dd.")
     private Date expirationDate;
     

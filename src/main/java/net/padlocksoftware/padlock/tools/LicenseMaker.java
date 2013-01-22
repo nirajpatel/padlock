@@ -75,6 +75,7 @@ public class LicenseMaker {
 
     public void writeLicence(OutputStream licenseStream) throws IOException {
         LicenseIO.exportLicense(license, licenseStream);
+        licenseStream.close();
     }
 
     public static void main(String[] args) throws CmdLineException, IOException {
@@ -86,15 +87,14 @@ public class LicenseMaker {
                 ByteArrayOutputStream licenseStream = new ByteArrayOutputStream();
                 maker.writeLicence(licenseStream);
                 System.out.println(licenseStream.toString());
-                licenseStream.close();
             } else {
-                FileOutputStream licenseStream = new FileOutputStream(options.getLicenseFile());
-                maker.writeLicence(licenseStream);
-                licenseStream.close();
+                maker.writeLicence(new FileOutputStream(options.getLicenseFile()));
             }
+            System.exit(0);
         } else {
             System.err.println(options.getErrorMessage());
             System.err.println(options.getUsage());
+            System.exit(-1);
         }
     }
 }
