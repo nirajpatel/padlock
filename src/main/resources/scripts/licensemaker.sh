@@ -1,4 +1,4 @@
 #!/bin/sh
 
-java -cp "lib/*" net.padlocksoftware.padlock.tools.KeyMaker $@
+java -cp "lib/*" net.padlocksoftware.padlock.tools.LicenseMaker $@
 
