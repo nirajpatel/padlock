@@ -90,11 +90,9 @@ public class LicenseMaker {
             } else {
                 maker.writeLicence(new FileOutputStream(options.getLicenseFile()));
             }
-            System.exit(0);
         } else {
             System.err.println(options.getErrorMessage());
             System.err.println(options.getUsage());
-            System.exit(-1);
         }
     }
 }

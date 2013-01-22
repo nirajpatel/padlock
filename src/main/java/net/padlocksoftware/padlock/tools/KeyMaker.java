@@ -97,11 +97,9 @@ public final class KeyMaker {
                 System.out.println("Your public key code: \n");
                 System.out.println(keyMaker.getJavaCode());
             }
-            System.exit(0);
         } else {
             System.err.println(options.getErrorMessage());
             System.err.println(options.getUsage());
-            System.exit(-1);
         }
     }
 }

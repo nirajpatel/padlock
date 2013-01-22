@@ -133,11 +133,9 @@ public class LicenseValidator {
         if (options.isValid()) {
             LicenseValidator validator = new LicenseValidator(options);
             System.out.println(validator.validate());
-            System.exit(0);
         } else {
             System.err.println(options.getErrorMessage());
             System.err.println(options.getUsage());
-            System.exit(-1);
         }
     }
 }
