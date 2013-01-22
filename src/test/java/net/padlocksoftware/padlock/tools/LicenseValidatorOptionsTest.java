@@ -13,7 +13,7 @@ public class LicenseValidatorOptionsTest extends Assert {
     @Test
     public void testNoKeyFile() throws Exception {
         String[] args = new String[] {
-            "-o", "license.lic"
+            "-l", "license.lic"
         };
         LicenseValidatorOptions options = new LicenseValidatorOptions(args);
         assertFalse(options.isValid());
@@ -32,7 +32,7 @@ public class LicenseValidatorOptionsTest extends Assert {
     public void testValid() throws Exception {
         String[] args = new String[] {
             "-k", "somefile.key",
-            "-o", "license.lic"
+            "-l", "license.lic"
         };
         LicenseValidatorOptions options = new LicenseValidatorOptions(args);
         assertTrue(options.isValid());

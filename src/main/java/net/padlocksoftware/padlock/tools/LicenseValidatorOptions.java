@@ -14,7 +14,7 @@ public class LicenseValidatorOptions {
     @Option(name="-k", metaVar="Key File", usage="Key File", required=true)
     private File keyFile;
     
-    @Option(name="-o", metaVar="License File", usage="License File", required=true)
+    @Option(name="-l", metaVar="License File", usage="License File", required=true)
     private File licenseFile;
     
     public LicenseValidatorOptions(String[] args) {

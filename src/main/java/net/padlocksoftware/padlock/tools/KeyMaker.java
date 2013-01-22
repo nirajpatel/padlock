@@ -98,7 +98,7 @@ public final class KeyMaker {
                 System.out.println(keyMaker.getJavaCode());
             }
         } else {
-            System.err.println(options.getErrorMessage());
+            System.err.println("Error: " + options.getErrorMessage());
             System.err.println(options.getUsage());
         }
     }
