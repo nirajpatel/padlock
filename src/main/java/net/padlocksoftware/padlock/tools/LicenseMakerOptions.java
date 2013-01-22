@@ -36,7 +36,7 @@ public class LicenseMakerOptions {
     
     @Option(name="-S", metaVar="Start", handler=DateOptionHandler.class,
         usage="The start of the license validity period, if different then the current date.  " +
-        		"The date format is yyyy/MM/dd.")
+        		"The date format is yyyy/MM/dd")
     private Date startDate;
     
     @Option(name="-e", metaVar="Expiration",
@@ -46,7 +46,7 @@ public class LicenseMakerOptions {
     
     @Option(name="-E", metaVar="Expiration", handler=DateOptionHandler.class,
         usage="License expriation date. If this option is omitted the license is perpetual. " +
-                        "The date format is yyyy/MM/dd.")
+                        "The date format is yyyy/MM/dd")
     private Date expirationDate;
     
     @Option(name="-x", metaVar="Expiration Float",
@@ -54,13 +54,13 @@ public class LicenseMakerOptions {
     private Long expirationFloatInMs;
     
     @Option(name="-p", metaVar="Properties", handler=MapOptionsHandler.class,
-        usage="License properties, Expressed as options of the form: key1=value1, key2=value2")
+        usage="License properties, Expressed as options of the form: key1=value1 key2=value2")
     private Map<String, String> properties;
     
     @Option(name="-P", metaVar="Properties File", usage="License properties file")
     private File propertiesFile;
     
-    @Option(name="-h", metaVar="Addresses", usage="Hardware locked addresses, in the form of mac1, mac2, mac3", 
+    @Option(name="-h", metaVar="Addresses", usage="Hardware locked addresses, in the form of mac1 mac2 mac3", 
         handler=StringSetOptionHandler.class)
     private Set<String> addresses;
     

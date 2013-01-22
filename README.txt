@@ -41,20 +41,20 @@ Your public key code:
 
 $ ./licensemaker.sh 
 Error: Option "-k" is required
- -E Expiration       : License expriation date. If this option is omitted the
-                       license is perpetual. The date format is yyyy/MM/dd.
+ -E Expiration       : License expiration date. If this option is omitted the
+                       license is perpetual. The date format is yyyy/MM/dd
  -O                  : License File Output to standard out instead of a file
  -P Properties File  : License properties file
  -S Start            : The start of the license validity period, if different
-                       then the current date.  The date format is yyyy/MM/dd.
+                       then the current date.  The date format is yyyy/MM/dd
  -e Expiration       : License expiration date. If this option is omitted the
                        license is perpetual. In ms since the epoch (1/1/1970)
- -h Addresses        : Hardware locked addresses, in the form of mac1, mac2,
+ -h Addresses        : Hardware locked addresses, in the form of mac1 mac2
                        mac3
  -k Key File         : Key File
  -o License File     : Output License File
  -p Properties       : License properties, Expressed as options of the form:
-                       key1=value1, key2=value2
+                       key1=value1 key2=value2
  -s Start            : The start of the license validity period, different than
                        the current date.  In ms since the epoch (1/1/1970)
  -x Expiration Float : Number of ms to expire after the initial run
