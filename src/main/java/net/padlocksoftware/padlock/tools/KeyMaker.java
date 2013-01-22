@@ -72,12 +72,12 @@ public final class KeyMaker {
             String line = lines[x];
             if (x == 0) {
                 // First line
-                builder.append("\t private static final String publicKey = \n\t\t\"" + line + "\" + ");
+                builder.append("\t private static final String publicKey = \n\t\t\"" + line + "\" + \n");
             } else if (x == lines.length - 1) {
                 // Last line
-                builder.append("\t\t\"" + line + "\";\n");
+                builder.append("\t\t\"" + line + "\";\n\n");
             } else {
-                builder.append("\t\t\"" + line + "\" + ");
+                builder.append("\t\t\"" + line + "\" + \n");
             }
         }
         return builder.toString();

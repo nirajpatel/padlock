@@ -66,58 +66,58 @@ public class LicenseValidator {
         StringBuilder builder = new StringBuilder();
         
         // Show test status
-        builder.append("\nValidation Test Results:");
-        builder.append("========================\n");
+        builder.append("\nValidation Test Results:\n");
+        builder.append("========================\n\n");
         for (TestResult result : state.getTests()) {
             builder.append("\t" + result.getTest().getName() + "\t\t\t"
-                               + (result.passed() ? "Passed" : "Failed"));
+                               + (result.passed() ? "Passed" : "Failed") + "\n");
         }
 
-        builder.append("\nLicense state: " + (state.isValid() ? "Valid" : "Invalid"));
+        builder.append("\nLicense state: " + (state.isValid() ? "Valid" : "Invalid" + "\n"));
 
         //
         // Cycle through any dates
         //
         Date d = license.getCreationDate();
-        builder.append("\nCreation date: \t\t" + d);
+        builder.append("\nCreation date: \t\t" + d + "\n");
 
         d = license.getStartDate();
-        builder.append("Start date: \t\t" + d);
+        builder.append("Start date: \t\t" + d + "\n");
 
         d = license.getExpirationDate();
-        builder.append("Expiration date: \t" + d);
+        builder.append("Expiration date: \t" + d + "\n");
 
         Long floatPeroid = license.getFloatingExpirationPeriod();
         if (floatPeroid != null) {
             long seconds = floatPeroid / 1000L;
-            builder.append("\nExpire after first run: " + seconds + " seconds");
+            builder.append("\nExpire after first run: " + seconds + " seconds\n");
 
         }
 
         if (floatPeroid != null || license.getExpirationDate() != null) {
             long remaining = v.getTimeRemaining(currentDate) / 1000L;
-            builder.append("\nTime remaining: " + remaining + " seconds");
+            builder.append("\nTime remaining: " + remaining + " seconds\n");
         }
 
         //
         // License properties
         //
-        builder.append("\nLicense Properties");
+        builder.append("\nLicense Properties\n");
         Properties p = license.getProperties();
         if (p.size() == 0) {
-            builder.append("None");
+            builder.append("None\n");
         }
 
         for (final Enumeration propNames = p.propertyNames(); propNames.hasMoreElements();) {
             final String key = (String)propNames.nextElement();
-            builder.append("Property: " + key + " = " + p.getProperty(key));
+            builder.append("Property: " + key + " = " + p.getProperty(key) + "\n");
         }
 
         //
         // Hardware locking
         //
         for (String address : license.getHardwareAddresses()) {
-            builder.append("\nHardware lock: " + address);
+            builder.append("\nHardware lock: " + address + "\n");
         }
         builder.append("\n");
         
