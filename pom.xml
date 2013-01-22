@@ -5,7 +5,7 @@
   <groupId>net.padlocksoftware</groupId>
   <artifactId>padlock</artifactId>
   <packaging>jar</packaging>
-  <version>2.2.1-pellcorp</version>
+  <version>2.2.1</version>
   <name>Padlock-Core</name>
   
   <build>
