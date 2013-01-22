@@ -30,7 +30,7 @@ public class LicenseMakerOptions {
     
     @Option(name="-s", metaVar="Start", 
         usage="The start of the license validity period, " 
-    		+ "different than the current date.  In ms since"
+    		+ "different than the current date.  In ms since "
                 + "the epoch (1/1/1970)")
     private Long startInMs;
     
@@ -45,7 +45,7 @@ public class LicenseMakerOptions {
     private Long expirationInMs;
     
     @Option(name="-E", metaVar="Expiration", handler=DateOptionHandler.class,
-        usage="License expriation date. If this option is omitted the license is perpetual." +
+        usage="License expriation date. If this option is omitted the license is perpetual. " +
                         "The date format is yyyy/MM/dd.")
     private Date expirationDate;
     
