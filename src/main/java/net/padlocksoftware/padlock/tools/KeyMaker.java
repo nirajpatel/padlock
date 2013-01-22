@@ -61,7 +61,6 @@ public final class KeyMaker {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
         int keySize = 1024;
         File file = null;
 

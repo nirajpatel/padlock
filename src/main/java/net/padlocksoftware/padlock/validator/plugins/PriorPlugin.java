@@ -1,24 +1,24 @@
 /*
-* Copyright (c) 2009-2012 Jason Nichols
+ * Copyright (c) 2009-2012 Jason Nichols
 
-* Permission is hereby granted, free of charge, to any person obtaining a copy 
-* of this software and associated documentation files (the "Software"), to deal 
-* in the Software without restriction, including without limitation the rights to 
-* use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies 
-* of the Software, and to permit persons to whom the Software is furnished to do 
-* so, subject to the following conditions:
+ * Permission is hereby granted, free of charge, to any person obtaining a copy 
+ * of this software and associated documentation files (the "Software"), to deal 
+ * in the Software without restriction, including without limitation the rights to 
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies 
+ * of the Software, and to permit persons to whom the Software is furnished to do 
+ * so, subject to the following conditions:
 
-* The above copyright notice and this permission notice shall be included in all 
-* copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all 
+ * copies or substantial portions of the Software.
 
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
-* SOFTWARE.
-*/
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+ * SOFTWARE.
+ */
 
 package net.padlocksoftware.padlock.validator.plugins;
 
@@ -31,61 +31,38 @@ import net.padlocksoftware.padlock.validator.ValidationParameters;
 import net.padlocksoftware.padlock.validator.ValidatorPlugin;
 
 /**
- *
  * @author Jason Nichols
  */
 public final class PriorPlugin implements ValidatorPlugin {
+    private static final String NAME = "Padlock Prior Plugin";
 
-  ///////////////////////////// Class Attributes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    private static final String DESCRIPTION = "Built in plugin which validates that the current "
+                                              + "date is after the license start date.";
 
-  private static final String NAME = "Padlock Prior Plugin";
+    private final Logger logger;
 
-  private static final String DESCRIPTION = "Built in plugin which validates that the current " +
-          "date is after the license start date.";
-
-  ////////////////////////////// Class Methods \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
-  //////////////////////////////// Attributes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    
-  private final Logger logger;
-  
-  /////////////////////////////// Constructors \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
-  public PriorPlugin() {
-    logger = Logger.getLogger(getClass().getName());
-  }
-  ////////////////////////////////// Methods \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  
-  //------------------------ Implements: ValidatorPlugin
-
-  public TestResult validate(License license, ValidationParameters validationParameters) {
-
-    Date currentDate = validationParameters.getValidationDate();
-
-    boolean passed = true;
-    // Check that the currentDate > startDate
-    if (currentDate.before(license.getStartDate())) {
-      logger.fine("Current date is before the license start date");
-      passed = false;
+    public PriorPlugin() {
+        logger = Logger.getLogger(getClass().getName());
     }
 
-    return new TestResult(LicenseTest.PRIOR, passed);
-  }
+    public TestResult validate(License license, ValidationParameters validationParameters) {
+        Date currentDate = validationParameters.getValidationDate();
 
-  public String getName() {
-    return NAME;
-  }
+        boolean passed = true;
+        // Check that the currentDate > startDate
+        if (currentDate.before(license.getStartDate())) {
+            logger.fine("Current date is before the license start date");
+            passed = false;
+        }
 
-  public String getDescription() {
-    return DESCRIPTION;
-  }
-  //------------------------ Overrides:
+        return new TestResult(LicenseTest.PRIOR, passed);
+    }
 
-  //---------------------------- Abstract Methods -----------------------------
+    public String getName() {
+        return NAME;
+    }
 
-  //---------------------------- Utility Methods ------------------------------
-  
-  //---------------------------- Property Methods -----------------------------
-
-
+    public String getDescription() {
+        return DESCRIPTION;
+    }
 }

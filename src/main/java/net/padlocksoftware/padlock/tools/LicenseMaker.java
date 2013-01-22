@@ -1,24 +1,24 @@
 /*
-* Copyright (c) 2009-2012 Jason Nichols
+ * Copyright (c) 2009-2012 Jason Nichols
 
-* Permission is hereby granted, free of charge, to any person obtaining a copy 
-* of this software and associated documentation files (the "Software"), to deal 
-* in the Software without restriction, including without limitation the rights to 
-* use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies 
-* of the Software, and to permit persons to whom the Software is furnished to do 
-* so, subject to the following conditions:
+ * Permission is hereby granted, free of charge, to any person obtaining a copy 
+ * of this software and associated documentation files (the "Software"), to deal 
+ * in the Software without restriction, including without limitation the rights to 
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies 
+ * of the Software, and to permit persons to whom the Software is furnished to do 
+ * so, subject to the following conditions:
 
-* The above copyright notice and this permission notice shall be included in all 
-* copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all 
+ * copies or substantial portions of the Software.
 
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
-* SOFTWARE.
-*/
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+ * SOFTWARE.
+ */
 
 package net.padlocksoftware.padlock.tools;
 
@@ -41,11 +41,9 @@ import net.padlocksoftware.padlock.license.LicenseIO;
 import net.padlocksoftware.padlock.license.LicenseSigner;
 
 /**
- *
  * @author Jason Nichols (jason@padlocksoftware.net)
  */
 public class LicenseMaker {
-
     //
     // If not specified, this format is used.
     //
@@ -61,31 +59,32 @@ public class LicenseMaker {
     static boolean stdOut = false;
 
     private static void showUsageAndExit() {
-
         System.err.println("Usage:");
         System.err.println("LicenseMaker [options] -k <KeyPair File> (-o <Output License File> | -O)\n");
         System.err.println("Options:");
         System.err.println("   -O                       Send output to standard out instead of a file\n");
-        System.err.println("   -s <Start>               The start of the license validity period, if\n" +
-                "                            different than the current date.  In ms since\n" +
-                "                            the epoch (1/1/1970)");
-        System.err.println("   -S <Start> [format]      The start of the license validity period, if\n" +
-                "                            different then the current date.  <Start> is of the\n" +
-                "                            format specified in [format], or defaults to yyyy/MM/dd.\n" +
-                "                            see Java's SimpleDateFormat for all formatting options.");
-        System.err.println("   -e <Expiration>          License expiration date, expressed as above. If\n" +
-                "                            this option is omitted the license is perpetual");
-        System.err.println("   -E <Expiration> [format] The end of the license validity period. <Expiration> \n" +
-                "                            is of the format specified in [format], or defaults to \n" +
-                "                            yyyy/MM/dd.\n" +
-                "                            see Java's SimpleDateFormat for all formatting options.");
+        System.err.println("   -s <Start>               The start of the license validity period, if\n"
+                           + "                            different than the current date.  In ms since\n"
+                           + "                            the epoch (1/1/1970)");
+        System.err
+            .println("   -S <Start> [format]      The start of the license validity period, if\n"
+                     + "                            different then the current date.  <Start> is of the\n"
+                     + "                            format specified in [format], or defaults to yyyy/MM/dd.\n"
+                     + "                            see Java's SimpleDateFormat for all formatting options.");
+        System.err.println("   -e <Expiration>          License expiration date, expressed as above. If\n"
+                           + "                            this option is omitted the license is perpetual");
+        System.err
+            .println("   -E <Expiration> [format] The end of the license validity period. <Expiration> \n"
+                     + "                            is of the format specified in [format], or defaults to \n"
+                     + "                            yyyy/MM/dd.\n"
+                     + "                            see Java's SimpleDateFormat for all formatting options.");
         System.err.println("   -x <Expiration Float>    Number of ms to expire after the initial run");
-        System.err.println("   -p <Properties>          License properties, expressed as a single string\n" +
-                "                            in the form of \"key1=value1, key2=value2\"");
-        System.err.println("   -h <Addresses>           Hardware locked addresses, expressed as a single string\n" +
-                "                            in the form of \"mac1, mac2, mac3\"");
+        System.err.println("   -p <Properties>          License properties, expressed as a single string\n"
+                           + "                            in the form of \"key1=value1, key2=value2\"");
+        System.err
+            .println("   -h <Addresses>           Hardware locked addresses, expressed as a single string\n"
+                     + "                            in the form of \"mac1, mac2, mac3\"");
         System.exit(1);
-
     }
 
     private static void parseStartDate(String arg) {
@@ -186,7 +185,6 @@ public class LicenseMaker {
     }
 
     private static void parseArguments(String[] args) {
-
         if (args.length < 3) {
             System.err.println("\nError: Insufficient arguments\n");
             showUsageAndExit();
@@ -256,7 +254,7 @@ public class LicenseMaker {
             } else if (arg.equals("-h")) {
                 x++;
                 parseLicenseHardware(args[x]);
-            } else if (arg.equals("-O")){
+            } else if (arg.equals("-O")) {
                 stdOut = true;
                 x++;
             } else {
@@ -267,10 +265,10 @@ public class LicenseMaker {
 
         // Check to see if the last argument is -O, since that has
         // can be missed with the above loop
-        if (args[args.length-1].equals("-O")) {
+        if (args[args.length - 1].equals("-O")) {
             stdOut = true;
         }
-        
+
         //
         // Verify that the license name and key are not null
         //
@@ -304,7 +302,7 @@ public class LicenseMaker {
         }
 
         for (final Enumeration propNames = properties.propertyNames(); propNames.hasMoreElements();) {
-            final String key = (String) propNames.nextElement();
+            final String key = (String)propNames.nextElement();
             license.addProperty(key, properties.getProperty(key));
         }
 
@@ -316,7 +314,7 @@ public class LicenseMaker {
         // Finally, sign the file
         //
 
-        LicenseSigner signer = LicenseSigner.createLicenseSigner((DSAPrivateKey) keyPair.getPrivate());
+        LicenseSigner signer = LicenseSigner.createLicenseSigner((DSAPrivateKey)keyPair.getPrivate());
         signer.sign(license);
 
         try {
@@ -334,7 +332,5 @@ public class LicenseMaker {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-
-
     }
 }
