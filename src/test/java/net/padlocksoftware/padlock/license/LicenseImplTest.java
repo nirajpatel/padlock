@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package net.padlocksoftware.padlock.license;
 
 import java.util.Date;
