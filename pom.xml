@@ -6,7 +6,7 @@
   <artifactId>padlock</artifactId>
   <packaging>jar</packaging>
   <version>2.2.1</version>
-  <name>Padlock-Core</name>
+  <name>Padlock</name>
   
   <build>
     <plugins>
