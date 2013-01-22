@@ -11,13 +11,12 @@ import org.kohsuke.args4j.spi.OneArgumentOptionHandler;
 import org.kohsuke.args4j.spi.Setter;
 
 public class DateOptionHandler extends OneArgumentOptionHandler<Date> {
+    public static final String DATE_FORMAT = "yyyy/MM/dd";
+    
     public DateOptionHandler(CmdLineParser parser, OptionDef option, Setter<? super Date> setter) {
         super(parser, option, setter);
     }
 
-    // will not support any other format!
-    private static final String DATE_FORMAT = "yyyy/MM/dd";
-   
     @Override
     protected Date parse(String argument) throws NumberFormatException, CmdLineException {
         SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);

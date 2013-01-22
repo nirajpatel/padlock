@@ -2,8 +2,10 @@ package net.padlocksoftware.padlock.tools;
 
 import java.io.File;
 import java.io.StringWriter;
+import java.util.Collection;
 import java.util.Date;
-import java.util.Properties;
+import java.util.Map;
+import java.util.Set;
 
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
@@ -46,12 +48,13 @@ public class LicenseMakerOptions {
         usage="Number of ms to expire after the initial run")
     private Long expirationFloatInMs;
     
-    @Option(name="-p", metaVar="Properties", handler=PropertiesOptionHandler.class,
-        usage="License properties, expressed as a single string in the form of \"key1=value1, key2=value2\"")
-    private Properties properties;
+    @Option(name="-p", metaVar="Properties", handler=MapOptionsHandler.class,
+        usage="License properties, Expressed as options of the form: key1=value1, key2=value2")
+    private Map<String, String> properties;
     
-    @Option(name="-h", metaVar="Addresses", handler=StringArrayOptionHandler.class)
-    private String[] addresses;
+    @Option(name="-h", metaVar="Addresses", usage="Hardware locked addresses, in the form of mac1, mac2, mac3", 
+        handler=StringSetOptionHandler.class)
+    private Set<String> addresses;
     
     public LicenseMakerOptions(String args[]) throws CmdLineException {
         parser = new CmdLineParser(this);
@@ -108,11 +111,11 @@ public class LicenseMakerOptions {
         return expirationFloatInMs;
     }
 
-    public Properties getProperties() {
+    public Map<String, String> getProperties() {
         return properties;
     }
 
-    public String[] getAddresses() {
+    public Set<String> getAddresses() {
         return addresses;
     }
 }
