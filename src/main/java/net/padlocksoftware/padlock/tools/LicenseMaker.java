@@ -75,7 +75,6 @@ public class LicenseMaker {
 
     public void writeLicence(OutputStream licenseStream) throws IOException {
         LicenseIO.exportLicense(license, licenseStream);
-        
     }
 
     public static void main(String[] args) throws CmdLineException, IOException {
