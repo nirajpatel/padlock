@@ -40,7 +40,11 @@ public final class KeyMaker {
     private final KeyPair pair;
 
     public KeyMaker(KeyMakerOptions options) throws IOException {
-        pair = KeyManager.createKeyPair();
+        if (options.getKeyFile().exists()) {
+            pair = KeyManager.importKeyPair(options.getKeyFile());
+        } else {
+            pair = KeyManager.createKeyPair();
+        }
     }
 
     public void writeKey(OutputStream outputStream) throws IOException {
@@ -55,7 +59,7 @@ public final class KeyMaker {
         int LENGTH = 60;
         int start = -LENGTH;
         int end = 0;
-
+        
         while (end < publicKey.length()) {
             end = Math.min(end + LENGTH, publicKey.length());
             start += LENGTH;
@@ -89,10 +93,12 @@ public final class KeyMaker {
     public static void main(String[] args) throws IOException {
         KeyMakerOptions options = new KeyMakerOptions(args);
         if (options.isValid()) {
-            // kind of weird passing options that we are not currently using 
-            // in the class, but that could change, so the pattern of the other tools stays
             KeyMaker keyMaker = new KeyMaker(options);
-            keyMaker.writeKey(new FileOutputStream(options.getKeyFile()));
+            
+            if (!options.getKeyFile().exists()) {
+                keyMaker.writeKey(new FileOutputStream(options.getKeyFile()));
+            }
+            
             if (options.isJavaFragment()) {
                 System.out.println("Your public key code: \n");
                 System.out.println(keyMaker.getJavaCode());

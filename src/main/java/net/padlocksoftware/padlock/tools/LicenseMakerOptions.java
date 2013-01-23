@@ -45,7 +45,7 @@ public class LicenseMakerOptions {
     private Long expirationInMs;
     
     @Option(name="-E", metaVar="Expiration", handler=DateOptionHandler.class,
-        usage="License expriation date. If this option is omitted the license is perpetual. " +
+        usage="License expiration date. If this option is omitted the license is perpetual. " +
                         "The date format is yyyy/MM/dd")
     private Date expirationDate;
     
