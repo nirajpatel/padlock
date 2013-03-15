@@ -1,26 +1,21 @@
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<!-- <groupId>net.padlocksoftware</groupId> -->
-	<!-- this is a fork and I will be taking padlock in a different direction, so it makes sense to use a different group -->
 	<groupId>com.pellcorp</groupId>
 	<artifactId>padlock</artifactId>
 	<packaging>jar</packaging>
 	<version>2.3.0</version>
 	<name>Padlock</name>
 
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<!-- FIXME fix up the dirs below so they are relative -->
+		<devHome>file:///home/jason/Development</devHome>
+	</properties>
+
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>3.0</version>
-				<configuration>
-					<excludePackageNames>net.padlocksoftware.padlock.tools:net.padlocksoftware.padlock.validator.history:net.padlocksoftware.padlock.validator.plugins</excludePackageNames>
-				</configuration>
-			</plugin>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -80,6 +75,18 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+	<distributionManagement>
+		<repository>
+			<id>repo</id>
+			<url>${devHome}/maven2/releases</url>
+		</repository>
+
+		<snapshotRepository>
+			<id>snapshot-repo</id>
+			<url>${devHome}/maven2/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
 </project>
 
 
