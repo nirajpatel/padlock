@@ -1,5 +1,9 @@
 Padlock 2.X Series Release Log
 
+January 2013 - 2.3.1
+====================
+Added batch files and fixed up shell scripts so can execute from different dir
+
 January 2013 - 2.2.1
 ====================
 Remove licensing requirements, merge the dist into the core and provide the LicenseMaker, LicenseValidator and KeyMaker as tools rather than

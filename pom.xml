@@ -4,14 +4,11 @@
 	<groupId>com.pellcorp</groupId>
 	<artifactId>padlock</artifactId>
 	<packaging>jar</packaging>
-	<version>2.3.0</version>
+	<version>2.3.1</version>
 	<name>Padlock</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-		<!-- FIXME fix up the dirs below so they are relative -->
-		<devHome>file:///home/jason/Development</devHome>
 	</properties>
 
 	<build>
