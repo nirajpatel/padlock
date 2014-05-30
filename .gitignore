@@ -1,3 +1,4 @@
-target/*
-testSigned.lic
-/target/
+.classpath
+.project
+.settings
+target
